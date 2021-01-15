@@ -12,33 +12,7 @@ class Weather extends Component {
       days: [],
       conditionsDayNight: []
     };
-
-    this.getCityWeatherFirst()
   }
-
-  getCityWeatherFirst() {
-    const options = {
-      method: 'GET',
-      url: 'http://api.openweathermap.org/data/2.5/forecast/',
-      params: {
-        q: 'adana,tr',
-        id: "524901",
-        appid: "96d3a68ad6213fe75961d17a7f405580",
-        units: "metric"
-      }
-    };
-    axios.request(options)
-      .then((response) => {
-
-        this.state.name = response.data.city.name;
-        this.state.conditions = response.data.list;
-
-        console.log(this.state.name);
-        console.log(this.state.conditions);
-      })
-      .catch((error) => { console.error(error); });
-  }
-
 
   getCityWeather(event) {
     var cityName = "adana"
@@ -71,15 +45,15 @@ class Weather extends Component {
         var conditionsArranged = [];
         var daysArranged=[];
         var dateTimeNow = new Date();
-        dateTimeNow.setDate(dateTimeNow.getDate() + -1)
+        dateTimeNow.setDate(dateTimeNow.getDate() + -1)   
 
         for (var i = 0; i < 8; i++) {
           var conditionsArrangedElement = [];
           dateTimeNow.setDate(dateTimeNow.getDate() + 1)             
-          var dateTimeDay = dateTimeNow.getUTCDate();          
-          var dateTimeMonth = dateTimeNow.getUTCMonth() + 1;
-          dateTimeMonth = dateTimeMonth.length==2 ? dateTimeMonth : "0"+dateTimeMonth;
-          var dateTimeYear = dateTimeNow.getUTCFullYear();
+          let dateTimeDay = dateTimeNow.getUTCDate().toString();          
+          let dateTimeMonth = (dateTimeNow.getUTCMonth() + 1).toString();
+          dateTimeMonth = dateTimeMonth.length===2 ? dateTimeMonth : "0"+dateTimeMonth;
+          var dateTimeYear = dateTimeNow.getUTCFullYear().toString();
           var day = conditionsDay.filter(x => x.dt_txt.includes(dateTimeMonth + "-" + dateTimeDay));
           var night = conditionsNight.filter(x => x.dt_txt.includes(dateTimeMonth + "-" + dateTimeDay));
           if (JSON.stringify(night).includes("dt_txt")) {
@@ -100,12 +74,16 @@ class Weather extends Component {
       .catch((error) => { console.error(error); });
   };
 
+  componentDidMount(){
+    this.getCityWeather();
+  }
+
   render() {
     return (
       <>
         <div className="container">
           <form className="w-100 text-center mt-5">
-            <select className="form-control halign" style={{ width: "300px" }} name="Sehir" onChange={(event) => this.getCityWeather(event)}>
+            <select id="CitySelect" className="form-control halign" style={{ width: "300px" }} name="Sehir" onChange={(event) => this.getCityWeather(event)}>
               <option value="1">Adana</option>
               <option value="2">Adıyaman</option>
               <option value="3">Afyonkarahisar</option>

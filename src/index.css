@@ -1,0 +1,56 @@
+body{
+  background-image: url("https://wallpapershome.com/images/pages/pic_h/5340.jpg");
+  background-size: cover;
+}
+
+.mycard{
+  margin: 8px;
+  background: rgb(131, 215, 236);
+}
+
+.mycard:hover{
+  margin: 0px;
+  background: rgb(23, 147, 185);
+  box-shadow: 10px 10px  rgb(0, 56, 94);
+}
+
+.mymodal{
+
+  background: rgb(28, 155, 194);
+
+}
+
+.mybutton{
+  background-color: rgb(247, 73, 73);
+}
+
+.moredetails{
+  background-color: rgb(92, 112, 131);
+  color:white;
+}
+.mymodalb{
+
+  background: rgb(0, 58, 105);
+
+}
+
+.mycardbody{
+  background: rgb(23, 147, 185);
+}
+
+.halign{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.font{
+  font-family: 'Yusei Magic', sans-serif;
+
+}
+
+.mypowered {
+  font-family: 'Yusei Magic', sans-serif;
+  color: black;
+  text-align: right
+}

@@ -1,4 +1,4 @@
-### https://awesome-jones-d464a9.netlify.app/
+### 
 #### Call 5 day / 3 hour forecast data via Open Weather Map Api
 
 

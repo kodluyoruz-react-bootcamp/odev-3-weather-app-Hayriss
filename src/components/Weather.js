@@ -175,7 +175,7 @@ class Weather extends Component {
 
                 <div className="row">
                   <h1 className="col-12 text-center font mt-3">{this.state.name}</h1>
-                  <div className="col-12">  
+                  <div className="col-12 moveFromDown">  
                   <div className="row">                                
                   {this.state.days.map((day,index) =>
                   <div className="col-2 text-center" key={index}>
@@ -184,7 +184,7 @@ class Weather extends Component {
                   )}
                   </div>
                   </div>
-                  <div className="col-12">  
+                  <div className="col-12 moveFromDown">  
                     <div className="row">  
                       {this.state.conditionsDayNight.map((condition, index) => (
                         <div className="col-2" key={index}>
@@ -261,7 +261,7 @@ class Weather extends Component {
                     </div>
                   </div>
                 </div>
-                <p className="mypowered"><strong>Created by Hayris</strong></p>
+                <p className="mypowered moveFromDownPowered"><strong>Created by Hayris</strong></p>
               </div>
             )
             }

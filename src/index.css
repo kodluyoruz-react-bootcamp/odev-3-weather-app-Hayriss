@@ -52,5 +52,31 @@ body{
 .mypowered {
   font-family: 'Yusei Magic', sans-serif;
   color: black;
-  text-align: right
+  text-align: right;
+  position: relative;
+  top:2000px;
+}
+
+.moveFromDownPowered{
+  animation-name: moveFromDownAnimPowered;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes moveFromDownAnimPowered
+{
+  0% {top:2000px; position: relative;}
+  100% {top:0px; position: relative;}
+}
+
+.moveFromDown{
+  animation-name: moveFromDownAnim;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes moveFromDownAnim
+{
+  0% {top:500px; position: relative;}
+  100% {top:0px; position: relative;}
 }

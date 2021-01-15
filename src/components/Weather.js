@@ -32,10 +32,10 @@ class Weather extends Component {
     axios.request(options)
       .then((response) => {
 
-        var ar = response.data.list.filter(x => x.dt_txt.includes("12:00:00") || x.dt_txt.includes("00:00:00"));
+        var ar = response.data.list.filter(x => x.dt_txt.includes("09:00:00") || x.dt_txt.includes("21:00:00"));
         ar.forEach(x => {
           var date = x.dt_txt.split(" ")[0];
-          var time = x.dt_txt.split(" ")[1].includes("12") ? "Day" : "Night";
+          var time = x.dt_txt.split(" ")[1].includes("09") ? "Day" : "Night";
           x.dt_txt = date + " ~ " + time;
         });
         this.setState({ name: response.data.city.name });
@@ -67,9 +67,9 @@ class Weather extends Component {
             conditionsArranged.push(conditionsArrangedElement);
           }
         }
-        this.setState({days : daysArranged});
-        console.log(this.state.days);
+        this.setState({days : daysArranged});       
         this.setState({ conditionsDayNight: conditionsArranged });
+        console.log(this.state.conditionsDayNight);
       })
       .catch((error) => { console.error(error); });
   };
@@ -175,81 +175,91 @@ class Weather extends Component {
 
                 <div className="row">
                   <h1 className="col-12 text-center font mt-3">{this.state.name}</h1>
+                  <div className="col-12">  
+                  <div className="row">                                
                   {this.state.days.map((day,index) =>
                   <div className="col-2 text-center" key={index}>
                     <span className="font"><strong>{day}</strong></span>
                   </div>
                   )}
+                  </div>
+                  </div>
+                  <div className="col-12">  
+                    <div className="row">  
+                      {this.state.conditionsDayNight.map((condition, index) => (
+                        <div className="col-2" key={index}>
+                          {condition.map((item, index2) => (
+                            <div className="row" key={index2}>
+                              <div className="card w-100 h-100 mycard">
+                                <img src={"http://openweathermap.org/img/wn/" + item[0].weather[0].icon + "@2x.png"} className="card-img-top" alt={"Picture: " + item[0].weather[0].main} width={25} ></img>
+                                <div className="card-body mycardbody">
+                                  <h6 className="card-title font"><strong>{item[0].dt_txt.split('~')[1]}</strong></h6>
+                                  <div>
+                                    <p style={{ fontSize: '0.8em' }} className="card-text font"><strong>Temp: </strong>{item[0].main.temp}°C</p>
 
-                  {this.state.conditionsDayNight.map((condition, index) => (
-                    <div className="col-2" key={index}>
-                      {condition.map((item, index2) => (
-                        <div className="row" key={index2}>
-                          <div className="card w-100 h-100 mycard">
-                            <img src={"http://openweathermap.org/img/wn/" + item[0].weather[0].icon + "@2x.png"} className="card-img-top" alt={"Picture: " + item[0].weather[0].main} width={25} ></img>
-                            <div className="card-body mycardbody">
-                              <h6 className="card-title font"><strong>{item[0].dt_txt.split('~')[1]}</strong></h6>
-                              <div>
-                                <p style={{ fontSize: '0.8em' }} className="card-text font"><strong>Max Temp: </strong>{item[0].main.temp_max}°C</p>
+                                    <p style={{ fontSize: '0.8em' }} className="card-text font"><strong>Max Temp: </strong>{item[0].main.temp_max}°C</p>
 
-                                <p style={{ fontSize: '0.8em' }} className="card-text font"><strong>Min Temp: </strong>{item[0].main.temp_min}°C</p>
+                                    <p style={{ fontSize: '0.8em' }} className="card-text font"><strong>Min Temp: </strong>{item[0].main.temp_min}°C</p>
 
-                                <p style={{ fontSize: '0.8em' }} className="card-text font"><strong>Condition: </strong> {item[0].weather[0].main}</p>
-                              </div>
-
-
-
-
-
-                              <button type="button" className="btn moredetails font" data-toggle="modal" data-target={"#clickModal"+index+index2}>
-                                More Details
-                              </button>
+                                    <p style={{ fontSize: '0.8em' }} className="card-text font"><strong>Condition: </strong> {item[0].weather[0].main}</p>
+                                  </div>
 
 
-                              <div className="modal fade mymodalb" id={"clickModal"+index+index2} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div className="modal-dialog " role="document">
-                                  <div className="modal-content mymodal">
-                                    <div className="modal-header">
-                                      <h5 className="text-center" id="exampleModalLabel">Weather Condition Details</h5>
-                                      <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div className="modal-body">
-                                      <div style={{height:"200px",width:"200px"}} className="text-center halign">
-                                        <img src={"http://openweathermap.org/img/wn/" + item[0].weather[0].icon + "@2x.png"} className="card-img-top mymodalb  rounded-circle" alt={"Picture: " + item[0].weather[0].main}></img>
-                                      </div>
-                                      <ul>
-                                        <li className="card-text"><strong>The Weather Feels Like: </strong>{item[0].main.feels_like}°C</li>
-                                        <li className="card-text"><strong>Description: </strong>{item[0].weather[0].main}, {item[0].weather[0].description}</li>
-                                        <li className="card-text"><strong>Humidity: </strong>{item[0].main.humidity}</li>     
-                                        <li className="card-text"><strong>Pressure: </strong>{item[0].main.pressure}</li>
-                                        <li className="card-text"><strong>Wind: </strong>
+
+
+
+                                  <button type="button" className="btn moredetails font" data-toggle="modal" data-target={"#clickModal"+index+index2}>
+                                    More Details
+                                  </button>
+
+
+                                  <div className="modal fade mymodalb" id={"clickModal"+index+index2} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div className="modal-dialog " role="document">
+                                      <div className="modal-content mymodal">
+                                        <div className="modal-header">
+                                          <h5 className="text-center" id="exampleModalLabel">Weather Condition Details</h5>
+                                          <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div className="modal-body">
+                                          <div style={{height:"200px",width:"200px"}} className="text-center halign">
+                                            <img src={"http://openweathermap.org/img/wn/" + item[0].weather[0].icon + "@2x.png"} className="card-img-top mymodalb  rounded-circle" alt={"Picture: " + item[0].weather[0].main}></img>
+                                          </div>
                                           <ul>
-                                            <li className="card-text"><strong>Speed: </strong>{item[0].wind.speed}</li>
-                                            <li className="card-text"><strong>Degree: </strong>{item[0].wind.deg}</li>                                     
+                                            <li className="card-text"><strong>The Weather Feels Like: </strong>{item[0].main.feels_like}°C</li>
+                                            <li className="card-text"><strong>Description: </strong>{item[0].weather[0].main}, {item[0].weather[0].description}</li>
+                                            <li className="card-text"><strong>Humidity: </strong>{item[0].main.humidity}</li>     
+                                            <li className="card-text"><strong>Pressure: </strong>{item[0].main.pressure}</li>
+                                            <li className="card-text"><strong>Wind: </strong>
+                                              <ul>
+                                                <li className="card-text"><strong>Speed: </strong>{item[0].wind.speed}</li>
+                                                <li className="card-text"><strong>Degree: </strong>{item[0].wind.deg}</li>                                     
+                                              </ul>
+                                            </li>                                     
                                           </ul>
-                                        </li>                                     
-                                      </ul>
-                                    
-                                    
-                                      
-                                    </div>
-                                    <div className="modal-footer">
+                                        
+                                        
+                                          
+                                        </div>
+                                        <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary text-white" data-dismiss="modal">Close</button>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
+
+
+
+
                                 </div>
                               </div>
-
-
-
-
                             </div>
-                          </div>
+                          ))}
                         </div>
                       ))}
                     </div>
-                  ))}
+                  </div>
                 </div>
                 <p className="mypowered"><strong>Created by Hayris</strong></p>
               </div>
